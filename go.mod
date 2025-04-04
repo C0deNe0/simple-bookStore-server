@@ -1,4 +1,4 @@
-module github.com/timepass-go
+module github.com/simple-bookStore-server
 
 go 1.23.1
 
