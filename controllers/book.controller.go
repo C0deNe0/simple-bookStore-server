@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/timepass-go/config"
-	"github.com/timepass-go/models"
+	"github.com/simple-bookStore-server/config"
+	"github.com/simple-bookStore-server/models"
 )
 
 func CreateBook(c echo.Context) error {
@@ -44,61 +44,61 @@ func UpdateBook(c echo.Context) error {
 	db := config.DB()
 
 	//binding data
-	if err := c.Bind(&b); err !=nil{
-		 data := map[string]interface{}{
+	if err := c.Bind(&b); err != nil {
+		data := map[string]interface{}{
 			"message": err.Error(),
-		 }
-		 return c.JSON(http.StatusInternalServerError,data)
+		}
+		return c.JSON(http.StatusInternalServerError, data)
 	}
 
 	exBook := new(models.Book)
 
-	if err:= db.First(&exBook,id).Error;err!=nil{
-			data := map[string]interface{}{
-				"message": err.Error(),
-			}
+	if err := db.First(&exBook, id).Error; err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
 
-			return c.JSON(http.StatusNotFound,data)
+		return c.JSON(http.StatusNotFound, data)
 	}
 
 	exBook.Name = b.Name
 	exBook.Description = b.Description
-	if err := db.Save(&exBook).Error ; err !=nil{
+	if err := db.Save(&exBook).Error; err != nil {
 		data := map[string]interface{}{
 			"message": err.Error(),
 		}
-		return c.JSON(http.StatusInternalServerError,data)
+		return c.JSON(http.StatusInternalServerError, data)
 
 	}
 
-		//actual response 
-		res := map[string]interface{}{
-			"data": exBook,
-		}
-		return c.JSON(http.StatusOK,res)
+	//actual response
+	res := map[string]interface{}{
+		"data": exBook,
+	}
+	return c.JSON(http.StatusOK, res)
 
 }
 
 func DeleteBook(c echo.Context) error {
-	 id := c.Param("id")
-	 db := config.DB()
+	id := c.Param("id")
+	db := config.DB()
 
-	 book := new(models.Book)
+	book := new(models.Book)
 
-	 err := db.Delete(&book,id).Error;
-	 if err!=nil {
-		 data := map[string]interface{}{
-			"message" : err.Error(),
-		 }
+	err := db.Delete(&book, id).Error
+	if err != nil {
+		data := map[string]interface{}{
+			"message": err.Error(),
+		}
 
-		 return c.JSON(http.StatusInternalServerError,data)
-	 }
+		return c.JSON(http.StatusInternalServerError, data)
+	}
 
-	 response := map[string]interface{}{
+	response := map[string]interface{}{
 		"message": "a book has been deleted",
-	 }
+	}
 
-	 return c.JSON(http.StatusOK,response)
+	return c.JSON(http.StatusOK, response)
 }
 
 func GetBook(c echo.Context) error {

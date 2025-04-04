@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo"
-	"github.com/timepass-go/config"
-	"github.com/timepass-go/controllers"
+	"github.com/simple-bookStore-server/config"
+	"github.com/simple-bookStore-server/controllers"
 )
 
 //middlewares here
